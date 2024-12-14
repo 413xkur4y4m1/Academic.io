@@ -1,0 +1,1676 @@
+document.write(
+  "<script src='../App_Themes/flat/assets/toastr-master/toastr.js'></script>"
+);
+document.write(
+  "<link href='../App_Themes/flat/assets/toastr-master/toastr.css' rel='stylesheet' type='text/css' />"
+);
+document.write(
+  "<script src='../App_Themes/flat/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js'></script>"
+);
+
+function modalWin(sPagina, sNombre, iAncho, iAlto, sScroll, sResize) {
+  window.open(
+    sPagina,
+    sNombre,
+    "height=" +
+      iAlto +
+      ",width=" +
+      iAncho +
+      ",toolbar=no,directories=no,status=no,scrollbars=" +
+      sScroll +
+      ",resizable=" +
+      sResize +
+      ",modal=yes"
+  );
+}
+
+var _msj_ = "x";
+var dvidMsj = "";
+
+$(document).ready(function () {
+    DatePicker();
+    DateCalentim();
+    LoadChosen();
+});
+
+function DatePicker() {
+  $(".input-datetime").pickadate({
+    container: "body",
+    format: "dd/mm/yyyy",
+    formatSubmit: "dd/mm/yyyy",
+    selectYears: 180,
+    selectMonths: true,
+    klass: {
+      // The element states
+      input: "picker__input",
+      active: "picker__input--active",
+
+      // The root picker and states *
+      picker: "picker",
+      opened: "picker--opened",
+      focused: "picker--focused",
+
+      // The picker holder
+      holder: "picker__holder",
+
+      // The picker frame, wrapper, and box
+      frame: "picker__frame",
+      wrap: "picker__wrap",
+      box: "picker__box",
+
+      // The picker header
+      header: "picker__header",
+
+      // Month navigation
+      navPrev: "picker__nav--prev",
+      navNext: "picker__nav--next",
+      navDisabled: "picker__nav--disabled",
+
+      // Month & year labels
+      month: "picker__month",
+      year: "picker__year",
+
+      // Month & year dropdowns
+      selectMonth: "picker__select--month",
+      selectYear: "picker__select--year",
+
+      // Table of dates
+      table: "table table-bordered table-striped table-condensed m-top10",
+
+      // Weekday labels
+      weekdays: "picker__weekday",
+
+      // Day states
+      day: "picker__day",
+      disabled: "picker__day--disabled",
+      selected: "picker__day--selected",
+      highlighted: "picker__day--highlighted",
+      now: "picker__day--today",
+      infocus: "picker__day--infocus",
+      outfocus: "picker__day--outfocus",
+
+      // The picker footer
+      footer: "picker__footer",
+
+      // Today, clear, & close buttons
+      buttonClear: "picker__button--clear",
+      buttonClose: "picker__button--close",
+      buttonToday: "picker__button--today",
+    },
+  });
+}
+
+function DateFlatPicker() {
+  Flatpickr.localize(Flatpickr.l10ns.es);
+  flatpickr(".date-time-flatpicker", {
+    enableTime: true,
+    time_24hr: true,
+    dateFormat: "d/m/Y H:i",
+    locale: "es",
+  });
+  $(".date-flatpicker").flatpickr({
+    //dateFormat: "d/m/Y",
+    mode: "multiple",
+  });
+  $(".date-flatpicker-unique").flatpickr({
+    dateFormat: "d/m/Y",
+    allowInput: true,
+  });
+  
+  $(".time-flatpicker").flatpickr({
+    enableTime: true,
+    noCalendar: true,
+  });
+  $(".date-flatpicker-range").flatpickr({
+    mode: "range",
+    dateFormat: "d/m/Y",
+  });
+  $(".date-flatpicker-range-ymd").flatpickr({
+    mode: "range",
+    dateFormat: "Y/m/d",
+  });
+}
+
+function DateCalentim() {
+  var userLanguage = navigator.language || navigator.userLanguage;
+  //console.log(">> Language = " + userLanguage);
+  $(".date-flatpicker-range").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    showButtons: true,
+    showWeekNumbers: true,
+    rangeOrientation: "vertical",
+    showTimePickers: false,
+    format: "L",
+    applyLabel: "Aplicar",
+    cancelLabel: "Cancelar",
+    rangeLabel: "\u00a0Rangos",
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "Hoy",
+        startDate: moment(),
+        endDate: moment(),
+      },
+      {
+        title: "Ayer",
+        startDate: moment().subtract(1, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".date-flatpicker-range-r").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    showButtons: true,
+    showWeekNumbers: true,
+    rangeOrientation: "vertical",
+    showTimePickers: false,
+    format: "L",
+    applyLabel: "Aplicar",
+    cancelLabel: "Cancelar",
+    rangeLabel: "\u00a0Rangos",
+    showOn: "right",
+    arrowOn: "center",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "Hoy",
+        startDate: moment(),
+        endDate: moment(),
+      },
+      {
+        title: "Ayer",
+        startDate: moment().subtract(1, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".date-flatpicker-range-b").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    showButtons: true,
+    showWeekNumbers: true,
+    rangeOrientation: "vertical",
+    showTimePickers: false,
+    format: "L",
+    applyLabel: "Aplicar",
+    cancelLabel: "Cancelar",
+    rangeLabel: "\u00a0Rangos",
+    showOn: "bottom",
+    arrowOn: "center",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "Hoy",
+        startDate: moment(),
+        endDate: moment(),
+      },
+      {
+        title: "Ayer",
+        startDate: moment().subtract(1, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".date-flatpicker-range-l").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    showButtons: true,
+    showWeekNumbers: true,
+    rangeOrientation: "vertical",
+    showTimePickers: false,
+    format: "L",
+    applyLabel: "Aplicar",
+    cancelLabel: "Cancelar",
+    rangeLabel: "\u00a0Rangos",
+    showOn: "left",
+    arrowOn: "right",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "Hoy",
+        startDate: moment(),
+        endDate: moment(),
+      },
+      {
+        title: "Ayer",
+        startDate: moment().subtract(1, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".date-flatpicker-rangetime").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    showButtons: true,
+    showWeekNumbers: true,
+    rangeOrientation: "vertical",
+    format: "DD/MM/YYYY HH:mm",
+    hourFormat: 24,
+    applyLabel: "Aplicar",
+    cancelLabel: "Cancelar",
+    rangeLabel: "\u00a0Rangos",
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "Hoy",
+        startDate: moment(),
+        endDate: moment(),
+      },
+      {
+        title: "Ayer",
+        startDate: moment().subtract(1, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".date-flatpicker-range-c").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    //showButtons: false,
+    showWeekNumbers: true,
+    // rangeOrientation: "vertical",
+    showTimePickers: false,
+    showHeader: true,
+    format: "L",
+    rangeLabel: "\u00a0Rangos",
+    //applyLabel: "Aplicar",
+    //cancelLabel: "Cancelar",
+    showOn: "bottom",
+    arrowOn: "center",
+    autoAlign: true,
+    autoCloseOnSelect: true,
+    startEmpty: true,
+    ranges: [
+      {
+        title: "\u00DAltima semana",
+        startDate: moment().subtract(7, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "\u00DAltimos 30 d\u00EDas",
+        startDate: moment().subtract(30, "days"),
+        endDate: moment().subtract(1, "days"),
+      },
+      {
+        title: "Este mes",
+        startDate: moment().startOf("month"),
+        endDate: moment().endOf("month"),
+      },
+      {
+        title: "\u00DAltimo mes",
+        startDate: moment().subtract(1, "months").startOf("month"),
+        endDate: moment().subtract(1, "months").endOf("month"),
+      },
+      {
+        title: "Este a\u00F1o",
+        startDate: moment().startOf("year"),
+        endDate: moment().endOf("year"),
+      },
+      {
+        title: "\u00DAltimo a\u00F1o",
+        startDate: moment().subtract(1, "years").startOf("year"),
+        endDate: moment().subtract(1, "years").endOf("year"),
+      },
+    ],
+  });
+
+  $(".time-flatpicker-range").calentim({
+    locale: userLanguage,
+    showHeader: false,
+    showFooter: false,
+    autoCloseOnSelect: true,
+    format: "HH:mm",
+    hourFormat: 24,
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    showCalendars: false,
+  });
+
+  $(".time-flatpicker").calentim({
+    locale: userLanguage,
+    singleDate: true,
+    calendarCount: 1,
+    showHeader: false,
+    showFooter: false,
+    autoCloseOnSelect: true,
+    format: "HH:mm",
+    hourFormat: 24,
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    showCalendars: false,
+    startEmpty: true,
+  });
+
+  $(".date-time-flatpicker").calentim({
+    locale: userLanguage,
+    singleDate: true,
+    calendarCount: 1,
+    showHeader: false,
+    showFooter: false,
+    autoCloseOnSelect: true,
+    format: "L HH:mm",
+    hourFormat: 24,
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    startEmpty: true,
+  });
+
+  $(".date-flatpicker-unique").calentim({
+    locale: userLanguage,
+    startOnMonday: true,
+    autoCloseOnSelect: true,
+    showWeekNumbers: false,
+    singleDate: true,
+    calendarCount: 1,
+    showHeader: false,
+    showFooter: false,
+    showTimePickers: false,
+    format: "L",
+    showOn: "top",
+    arrowOn: "center",
+    autoAlign: true,
+    startEmpty: true,
+    });
+
+    $(".date-flatpicker-unique-mindatetoday").calentim({
+        locale: userLanguage,
+        startOnMonday: true,
+        autoCloseOnSelect: true,
+        showWeekNumbers: false,
+        singleDate: true,
+        calendarCount: 1,
+        showHeader: false,
+        showFooter: false,
+        showTimePickers: false,
+        format: "L",
+        showOn: "top",
+        arrowOn: "center",
+        autoAlign: true,
+        startEmpty: true,
+        minDate: new Date()
+    });
+}
+
+function LoadPopover() {
+  $(".popovers").popover();
+
+  $(".popovers-image").popover({
+    html: true,
+  });
+}
+
+function LoadChosen() {
+  $(".chosen-select").chosen({
+    placeholder_text_single: "Selecciona una opci\u00F3n...",
+    placeholder_text_multiple: "Selecciona al menos una opci\u00F3n...",
+    no_results_text: "- No se encontr\u00F3 informaci\u00F3n -",
+    allow_single_deselect: true,
+  });
+
+  $(".chosen-select-lmtd8").chosen({
+    placeholder_text_single: "Selecciona una opci\u00F3n...",
+    placeholder_text_multiple: "Selecciona al menos una opci\u00F3n...",
+    no_results_text: "- No se encontr\u00F3 informaci\u00F3n -",
+    allow_single_deselect: true,
+    max_selected_options: 8,
+  });
+}
+
+function endReq(sender, args) {
+    DatePicker();
+    DateCalentim();
+    LoadChosen();
+    LoadPopover();
+    $(".tooltips").tooltip();
+    $(".chkToggle").bootstrapToggle();
+    ActualizaIconos();
+}
+
+function pageLoaded(sender, args) {
+    ActualizaIconos();
+}
+
+function MostrarMensaje(sDiv) {
+  if (_msj_ != "x");
+  clearTimeout(_msj_);
+  $(document).ready(function () {
+    $(sDiv).animate({ "margin-bottom": "70px" }, 800);
+    $(sDiv).animate({ "margin-bottom": "50px" }, 400);
+    _msj_ = setTimeout(function () {
+      $(sDiv).animate({ "margin-bottom": "-300px" }, 800);
+    }, 6000);
+  });
+}
+function OcultarMensaje(sDiv) {
+  if (_msj_ != "x");
+  clearTimeout(_msj_);
+  $(document).ready(function () {
+    $(sDiv).animate({ "margin-bottom": "-300px" }, 1000);
+  });
+}
+
+function MostrarMsj(sType, sTitle, sMsj) {
+    var i = -1;
+    var toastCount = 0;
+    var $toastlast;
+
+    $(document).ready(function () {
+        var shortCutFunction = sType;
+        var msg = sMsj;
+        var title = sTitle;
+        var toastIndex = toastCount++;
+
+
+        toastr.options = {
+            closeButton: true,
+            debug: false,
+            progressBar: true,
+            positionClass: "toast-top-right",
+            preventDuplicates: false,
+            onclick: null,
+        };
+
+        toastr.options.showDuration = "300";
+        toastr.options.hideDuration = "1000";
+        toastr.options.timeOut = "5000";
+        toastr.options.extendedTimeOut = "1000";
+        toastr.options.showEasing = "swing";
+        toastr.options.hideEasing = "swing";
+        toastr.options.showMethod = "slideDown";
+        toastr.options.hideMethod = "slideUp";
+
+        var $toast = toastr[shortCutFunction](msg, title);
+    });
+}
+
+function CuentaCaracteres(txt, contador, iCantMax, tipo = 0) {
+  // >> Tipo ===> 0 = Entre par�tesis, 1 = Con dos puntos
+
+  var lblCont = document.getElementById(contador);
+  var cant = iCantMax - txt.value.length;
+  var sTipoVisualizacion = "";
+
+  switch (tipo) {
+    case 0:
+      sTipoVisualizacion = "(" + cant + " caracteres restantes)";
+      break;
+    case 1:
+      sTipoVisualizacion = "Caracteres restantes: " + cant;
+      break;
+    default:
+      sTipoVisualizacion = "(" + cant + " caracteres restantes)";
+      break;
+  }
+  lblCont.innerText = sTipoVisualizacion;
+
+  if (cant < 0) lblCont.style.color = "#ff0000";
+  else lblCont.style.color = "#848484";
+}
+
+function CheckElements(checkbox, estado) {
+  var checkboxlist = document.getElementById(checkbox);
+  var count = checkboxlist.getElementsByTagName("input");
+  for (var i = 0; i < count.length; i++) {
+    count[i].checked = estado;
+  }
+  return false;
+}
+
+function esNumero(n) {
+  return !isNaN(parseInt(n));
+}
+
+var refTimeOut;
+var btnRef;
+function validar(ctrl, e, btnR, lnk, iTecla) {
+  var tecla = document.all ? e.keyCode : e.which;
+  var bEnviar = true;
+  if (tecla == iTecla) {
+    bEnviar = false;
+    btnRef = btnR;
+    ctrl.disabled = true;
+    document.getElementById(lnk).removeAttribute("href");
+    refTimeOut = setTimeout("Enviar()", 1);
+  }
+  return bEnviar;
+}
+
+function Enviar() {
+  clearTimeout(refTimeOut);
+  __doPostBack(btnRef, "");
+}
+
+function formateaNumero(sNumero) {
+  var sEntero = "";
+  var sCentenas = "";
+  var sMiles = "";
+  var sDecimal = "";
+  var res = "";
+  sNumero = parseFloat(sNumero).toFixed(2);
+  if (sNumero.toString().match(/^\d+$/)) {
+    if (sNumero.toString().match(/^\d{4,6}/)) {
+      sEntero = sNumero.toString();
+      sCentenas = sEntero.substring(sEntero.length - 3);
+      sMiles = sEntero.substring(0, sEntero.indexOf(sCentenas));
+      res = sMiles + "," + sCentenas;
+    } else {
+      res = sNumero.toString() + ".00";
+    }
+  } else {
+    if (sNumero.toString().match(/^\d{4,6}\.\d{1,2}$/)) {
+      sEntero = sNumero.toString().split(".")[0];
+      sDecimal = sNumero.toString().split(".")[1];
+
+      sCentenas = sEntero.substring(sEntero.length - 3);
+      sMiles = sEntero.substring(0, sEntero.indexOf(sCentenas));
+      res = sMiles + "," + sCentenas + "." + sDecimal;
+    } else {
+      res = sNumero.toString();
+    }
+  }
+  return res;
+}
+
+function roundToTwo(num) {
+  return +(Math.round(num + "e+2") + "e-2");
+}
+var fValorActual = 0.0;
+var fCantidad = 0.0;
+
+function Calcular(
+  evt,
+  txtCantidad,
+  valorImporteActual,
+  valorSubTotal,
+  valorImpuesto,
+  valorTotal,
+  valorPagado,
+  valorDiferencia,
+  lblSubTotal,
+  lblImpuesto,
+  lblTotal,
+  lblDiferencia,
+  dvError,
+  dvBoton,
+  dvParcialidad,
+  dvRecargos,
+  lblFormaP
+) {
+  var nav4 = window.event ? true : false;
+  var key = nav4 ? window.event.keyCode : evt.which;
+  var bVal =
+    key == 8 ||
+    (key >= 48 && key <= 57) ||
+    (key >= 96 && key <= 105) ||
+    key == 110 ||
+    key == 190 ||
+    key == 46 ||
+    key == 188;
+  if (bVal) {
+    refTimeOut = setTimeout(function () {
+      var fSubTotal = 0.0;
+      var fTasaImpuesto = 0.0;
+      var fImpuesto = 0.0;
+      var fTotal = 0.0;
+      var fPagado = 0.0;
+      var fDiferencia = 0.0;
+      var sCant = 0;
+      if (txtCantidad.value == "") sCant = 0;
+      else sCant = txtCantidad.value;
+      fCantidad = parseFloat(sCant);
+      fSubTotal = parseFloat(valorSubTotal.value);
+      fTasaImpuesto = parseFloat(valorImpuesto.value);
+      fValorActual = parseFloat(valorImporteActual.value);
+      fTotal = parseFloat(valorTotal.value);
+      fPagado = parseFloat(valorPagado.value);
+      fDiferencia = parseFloat(valorDiferencia.value);
+
+      if (
+        !isNaN(fCantidad) &&
+        !isNaN(fValorActual) &&
+        !isNaN(fSubTotal) &&
+        !isNaN(fTasaImpuesto) &&
+        !isNaN(fTotal) &&
+        !isNaN(fPagado) &&
+        !isNaN(fDiferencia)
+      ) {
+        fSubTotal -= roundToTwo(fValorActual);
+        fSubTotal += roundToTwo(fCantidad);
+
+        fImpuesto = fSubTotal * fTasaImpuesto;
+        fTotal = fSubTotal + fImpuesto;
+
+        fTotal = roundToTwo(fTotal);
+        fPagado = roundToTwo(fPagado);
+        fDiferencia = fTotal - fPagado;
+
+        var sSubTotal = roundToTwo(fSubTotal).toString();
+        var sImpuesto = roundToTwo(fImpuesto).toString();
+        var sTotal = roundToTwo(fTotal).toString();
+        var sDiferencia = roundToTwo(fDiferencia).toString();
+
+        sSubTotal = formateaNumero(sSubTotal);
+        sImpuesto = formateaNumero(sImpuesto);
+        sTotal = formateaNumero(sTotal);
+        sDiferencia = formateaNumero(sDiferencia);
+
+        $("#" + lblSubTotal)[0].innerHTML = sSubTotal;
+        $("#" + lblImpuesto)[0].innerHTML = sImpuesto;
+        $("#" + lblDiferencia)[0].innerHTML = sDiferencia;
+        $("#" + lblTotal)[0].innerHTML = sTotal;
+
+        valorDiferencia.value = fDiferencia;
+        valorTotal.value = fTotal;
+        valorSubTotal.value = fSubTotal;
+
+        if (txtCantidad.value == "") valorImporteActual.value = 0;
+        else valorImporteActual.value = fCantidad;
+
+        ValidaDiferenciaFact(
+          valorDiferencia,
+          dvError,
+          dvBoton,
+          dvParcialidad,
+          dvRecargos,
+          lblFormaP
+        );
+      }
+    }, 200);
+  }
+}
+
+function ReCalcularAR(
+  evt,
+  valorRecargos,
+  valorSubTotal,
+  valorImpuesto,
+  valorTotal,
+  valorPagado,
+  valorDif,
+  lblSubTotal,
+  lblImpuesto,
+  lblTotal,
+  lblPagado,
+  lblDiferencia,
+  dvError,
+  dvBoton,
+  dvParcialidad,
+  dvRecargos,
+  lblFormaP
+) {
+  var fValorRec = 0.0;
+  var fTotal = 0.0;
+  var fPagado = 0.0;
+  var fDiferencia = 0.0;
+  var fSubTotal = 0.0;
+  var fTasaImpuesto = 0.0;
+  var fImpuesto = 0.0;
+
+  fValorRec = parseFloat(valorRecargos.value);
+  fSubTotal = parseFloat(valorSubTotal.value);
+  fTasaImpuesto = parseFloat(valorImpuesto.value);
+  fTotal = parseFloat(valorTotal.value);
+  fPagado = parseFloat(valorPagado.value);
+
+  if (
+    !isNaN(fValorRec) &&
+    !isNaN(fSubTotal) &&
+    !isNaN(fTasaImpuesto) &&
+    !isNaN(fTotal) &&
+    !isNaN(fDiferencia) &&
+    !isNaN(fPagado)
+  ) {
+    fSubTotal -= fValorActual;
+    fSubTotal += fCantidad;
+
+    fImpuesto = fSubTotal * fTasaImpuesto;
+    fTotal = fSubTotal + fImpuesto;
+    fDiferencia = roundToTwo(fTotal) - roundToTwo(fPagado);
+
+    var sSubTotal = roundToTwo(fSubTotal).toString();
+    var sImpuesto = roundToTwo(fImpuesto).toString();
+    var sTotal = roundToTwo(fTotal).toString();
+    var sPagado = roundToTwo(fPagado).toString();
+    var sDiferencia = roundToTwo(fDiferencia).toString();
+
+    sSubTotal = formateaNumero(sSubTotal);
+    sImpuesto = formateaNumero(sImpuesto);
+    sPagado = formateaNumero(sPagado);
+    sTotal = formateaNumero(sTotal);
+    sDiferencia = formateaNumero(sDiferencia);
+
+    $("#" + lblSubTotal)[0].innerHTML = sSubTotal;
+    $("#" + lblImpuesto)[0].innerHTML = sImpuesto;
+    $("#" + lblDiferencia)[0].innerHTML = sDiferencia;
+    $("#" + lblTotal)[0].innerHTML = sTotal;
+    $("#" + lblPagado)[0].innerHTML = sPagado;
+
+    valorDif.value = fDiferencia;
+    valorTotal.value = fTotal;
+    valorSubTotal.value = fSubTotal;
+    valorPagado.value = fPagado;
+
+    ValidaDiferenciaFact(
+      valorDif,
+      dvError,
+      dvBoton,
+      dvParcialidad,
+      dvRecargos,
+      lblFormaP
+    );
+  }
+}
+
+function ReCalcularNR(
+  evt,
+  valorRecargos,
+  valorSubTotal,
+  valorImpuesto,
+  valorTotal,
+  valorPagado,
+  valorDif,
+  lblSubTotal,
+  lblImpuesto,
+  lblTotal,
+  lblPagado,
+  lblDiferencia,
+  dvError,
+  dvBoton,
+  dvParcialidad,
+  dvRecargos,
+  lblFormaP
+) {
+  var fValorRec = 0.0;
+  var fTotal = 0.0;
+  var fPagado = 0.0;
+  var fDiferencia = 0.0;
+  var fSubTotal = 0.0;
+  var fTasaImpuesto = 0.0;
+  var fImpuesto = 0.0;
+
+  fValorRec = parseFloat(valorRecargos.value);
+  fSubTotal = parseFloat(valorSubTotal.value);
+  fTasaImpuesto = parseFloat(valorImpuesto.value);
+  fTotal = parseFloat(valorTotal.value);
+  fPagado = parseFloat(valorPagado.value);
+
+  if (
+    !isNaN(fValorRec) &&
+    !isNaN(fSubTotal) &&
+    !isNaN(fTasaImpuesto) &&
+    !isNaN(fTotal) &&
+    !isNaN(fDiferencia) &&
+    !isNaN(fPagado)
+  ) {
+    fSubTotal -= fValorActual;
+    fSubTotal += fCantidad;
+
+    fImpuesto = fSubTotal * fTasaImpuesto;
+    fTotal = fSubTotal + fImpuesto;
+    fDiferencia = roundToTwo(fTotal) - roundToTwo(fPagado);
+
+    var sSubTotal = roundToTwo(fSubTotal).toString();
+    var sImpuesto = roundToTwo(fImpuesto).toString();
+    var sTotal = roundToTwo(fTotal).toString();
+    var sPagado = roundToTwo(fPagado).toString();
+    var sDiferencia = roundToTwo(fDiferencia).toString();
+
+    sSubTotal = formateaNumero(sSubTotal);
+    sImpuesto = formateaNumero(sImpuesto);
+    sTotal = formateaNumero(sTotal);
+    sPagado = formateaNumero(sPagado);
+    sDiferencia = formateaNumero(sDiferencia);
+
+    $("#" + lblSubTotal)[0].innerHTML = sSubTotal;
+    $("#" + lblImpuesto)[0].innerHTML = sImpuesto;
+    $("#" + lblDiferencia)[0].innerHTML = sDiferencia;
+    $("#" + lblTotal)[0].innerHTML = sTotal;
+    $("#" + lblPagado)[0].innerHTML = sPagado;
+
+    valorDif.value = fDiferencia;
+    valorTotal.value = fTotal;
+    valorSubTotal.value = fSubTotal;
+    valorPagado.value = fPagado;
+
+    ValidaDiferenciaFact(
+      valorDif,
+      dvError,
+      dvBoton,
+      dvParcialidad,
+      dvRecargos,
+      lblFormaP
+    );
+  }
+}
+
+function ValidaDiferenciaFact(
+  valorDif,
+  dvError,
+  dvBoton,
+  dvParcialidad,
+  dvRecargos,
+  lblFormaP
+) {
+  var fDiferencia = 0.0;
+  fDiferencia = parseFloat(valorDif.value);
+  if (!isNaN(fDiferencia)) {
+    if (roundToTwo(fDiferencia) < 0) {
+      $($(document.getElementById(dvError))[0]).show(400);
+      $($(document.getElementById(dvBoton))[0]).hide(400);
+      $($(document.getElementById(dvParcialidad))[0]).hide(400);
+      $($(document.getElementById(dvRecargos))[0]).hide(400);
+    } else {
+      $($(document.getElementById(dvError))[0]).hide(400);
+      $($(document.getElementById(dvBoton))[0]).show(400);
+
+      if (roundToTwo(fDiferencia) > 0) {
+        $($(document.getElementById(dvParcialidad))[0]).show(400);
+      } else {
+        $($(document.getElementById(dvParcialidad))[0]).hide(400);
+      }
+
+      $($(document.getElementById(dvRecargos))[0]).show(400);
+    }
+  }
+}
+
+function Wizard(opc) {
+  var stp = "<%= hfvStpActual.ClientID %>";
+  document.getElementById("hfvStpActual").value = opc;
+
+  var ClassS0 = opc == 1 ? "current" : "disabled";
+  var ClassS1 = opc == 2 ? "current" : "disabled";
+  var ClassS2 = opc == 3 ? "current" : "disabled";
+  var ClassS3 = opc == 4 ? "current" : "disabled";
+  var ClassS4 = opc == 5 ? "current" : "disabled";
+  var ClassS5 = opc == 6 ? "current" : "disabled";
+  var ClassS6 = opc == 7 ? "current" : "disabled";
+  var ClassS7 = opc == 8 ? "current" : "disabled";
+  var ClassS8 = opc == 9 ? "current" : "disabled";
+  var ClassS9 = opc == 10 ? "current" : "disabled";
+
+  $("#default-step-0").css("display", "none");
+  $("#default-step-1").css("display", "none");
+  $("#default-step-2").css("display", "none");
+  $("#default-step-3").css("display", "none");
+  $("#default-step-4").css("display", "none");
+  $("#default-step-5").css("display", "none");
+  $("#default-step-6").css("display", "none");
+  $("#default-step-7").css("display", "none");
+  $("#default-step-8").css("display", "none");
+  $("#default-step-9").css("display", "none");
+
+  $("#default0").removeClass("current");
+  $("#default1").removeClass("current");
+  $("#default2").removeClass("current");
+  $("#default3").removeClass("current");
+  $("#default4").removeClass("current");
+  $("#default5").removeClass("current");
+  $("#default6").removeClass("current");
+  $("#default7").removeClass("current");
+  $("#default8").removeClass("current");
+  $("#default9").removeClass("current");
+
+  $("#default0").removeClass("disabled");
+  $("#default1").removeClass("disabled");
+  $("#default2").removeClass("disabled");
+  $("#default3").removeClass("disabled");
+  $("#default4").removeClass("disabled");
+  $("#default5").removeClass("disabled");
+  $("#default6").removeClass("disabled");
+  $("#default7").removeClass("disabled");
+  $("#default8").removeClass("disabled");
+  $("#default9").removeClass("disabled");
+
+  $("#default0").addClass(ClassS0);
+  $("#default1").addClass(ClassS1);
+  $("#default2").addClass(ClassS2);
+  $("#default3").addClass(ClassS3);
+  $("#default4").addClass(ClassS4);
+  $("#default5").addClass(ClassS5);
+  $("#default6").addClass(ClassS6);
+  $("#default7").addClass(ClassS7);
+  $("#default8").addClass(ClassS8);
+  $("#default9").addClass(ClassS9);
+
+  switch (opc) {
+    case 1:
+      $("#default-step-0").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 2:
+      $("#default-step-1").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 3:
+      $("#default-step-2").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 4:
+      $("#default-step-3").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 5:
+      $("#default-step-4").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 6:
+      $("#default-step-5").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 7:
+      $("#default-step-6").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 8:
+      $("#default-step-7").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 9:
+      $("#default-step-8").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+    case 10:
+      $("#default-step-9").animate(
+        {
+          height: "toggle",
+          opacity: "toggle",
+        },
+        "slow"
+      );
+      break;
+  }
+}
+
+function MarcarChecksTabla(check, tabla) {
+  $("table#" + tabla + " tr td input[type=checkbox]").each(function () {
+    this.checked = check;
+  });
+}
+
+function MarcarChecksTablaClase(check, tClase) {
+  $("table." + tClase + " tr td input[type=checkbox]").each(function () {
+    this.checked = check;
+  });
+}
+
+function MarcarChecksDiv(check, Div) {
+  $("#" + Div + " input[type=checkbox]").each(function () {
+    this.checked = check;
+  });
+}
+
+function SeleccionaItemListBox(id) {
+  id = document.getElementById(id);
+  for (i = 0; (ele = id.options[i]); i++) {
+    ele.selected = true;
+  }
+  return false;
+}
+function DeSeleccionaItemListBox(id) {
+  id = document.getElementById(id);
+  for (i = 0; (ele = id.options[i]); i++) {
+    ele.selected = false;
+  }
+  return false;
+}
+
+function SeleccionaItemListBoxChangedValue(id, idHDF) {
+  var iSeleccionados = 0;
+  id = $("#" + id);
+  for (i = 0; (ele = id.options[i]); i++) {
+    ele.selected = true;
+    iSeleccionados++;
+  }
+
+  idHDF = $("#" + idHDF);
+  idHDF.value = iSeleccionados;
+
+  return false;
+}
+
+function MarcarTodosChosen(id, bChange = true) {
+  var aSelect = [];
+
+  $("#" + id + " option").each(function (key, value) {
+    aSelect.push(value.value);
+  });
+
+  $("#" + id)
+    .val(aSelect)
+    .trigger("chosen:updated");
+
+  if (bChange) $("#" + id).change();
+}
+
+function DesmarcarTodosChosen(id, bChange = true) {
+  $("#" + id)
+    .val("")
+    .trigger("chosen:updated");
+
+  if (bChange) $("#" + id).change();
+}
+
+function MueveScrollTo(pixelFromTop) {
+  $("html, body").animate({ scrollTop: pixelFromTop }, 500);
+}
+
+function ModalMueveScrollTo(classScrollable, pixelFromTop) {
+  $(classScrollable).animate({ scrollTop: pixelFromTop }, 500);
+}
+function CambiarIcono(actualIcon, triggerBtn, hiddenfieldValue) {
+  $("." + triggerBtn)
+    .iconpicker()
+    .iconpicker("setArrowClass", "btn-accent")
+    .iconpicker("setArrowPrevIconClass", "far fa-angle-left")
+    .iconpicker("setArrowNextIconClass", "far fa-angle-right")
+    .iconpicker("setCols", 6)
+    .iconpicker("setFooter", true)
+    .iconpicker("setHeader", true)
+    .iconpicker("setIconset", {
+      iconClass: "far",
+      iconClassFix: "fa-",
+      icons: [
+        "at",
+        "alarm-clock",
+        "analytics",
+        "apple-alt",
+        "archive",
+        "atom",
+        "award",
+        "backpack",
+        "badge",
+        "badge-dollar",
+        "basketball-ball",
+        "beer",
+        "bell",
+        "bell-school",
+        "biking",
+        "birthday-cake",
+        "bolt",
+        "bomb",
+        "bone",
+        "book",
+        "book-open",
+        "book-reader",
+        "bookmark",
+        "boxes",
+        "brain",
+        "briefcase",
+        "broadcast-tower",
+        "bug",
+        "bullhorn",
+        "bullseye",
+        "bullseye-arrow",
+        "burn",
+        "bus-alt",
+        "cactus",
+        "calculator",
+        "calculator-alt",
+        "calendar-alt",
+        "camera-alt",
+        "camera-movie",
+        "campfire",
+        "capsules",
+        "car-mechanic",
+        "car-side",
+        "carrot",
+        "cart-plus",
+        "cassette-tape",
+        "cat",
+        "certificate",
+        "chalkboard",
+        "chalkboard-teacher",
+        "chart-area",
+        "chart-line",
+        "chart-network",
+        "chart-pie",
+        "check",
+        "check-circle",
+        "check-square",
+        "cheeseburger",
+        "chess",
+        "chess-knight-alt",
+        "chess-pawn",
+        "church",
+        "clinic-medical",
+        "clipboard-check",
+        "clipboard-list-check",
+        "clock",
+        "cloud",
+        "code",
+        "code-merge",
+        "coffee",
+        "cogs",
+        "coin",
+        "comet",
+        "comment-alt",
+        "comment-alt-dollar",
+        "comment-smile",
+        "compass",
+        "computer-speaker",
+        "construction",
+        "cookie",
+        "corn",
+        "couch",
+        "cow",
+        "crop",
+        "cross",
+        "crow",
+        "crown",
+        "cube",
+        "cut",
+        "database",
+        "desktop-alt",
+        "dice",
+        "digging",
+        "directions",
+        "dna",
+        "dollar-sign",
+        "dot-circle",
+        "download",
+        "drafting-compass",
+        "drum",
+        "drumstick",
+        "duck",
+        "dumbbell",
+        "elephant",
+        "engine-warning",
+        "envelope",
+        "eraser",
+        "exchange",
+        "exclamation-circle",
+        "exclamation-triangle",
+        "expand",
+        "eye",
+        "eye-dropper",
+        "fan",
+        "faucet",
+        "feather-alt",
+        "female",
+        "male",
+        "child",
+        "fighter-jet",
+        "file-alt",
+        "file-signature",
+        "file-spreadsheet",
+        "fill",
+        "film",
+        "filter",
+        "fingerprint",
+        "fire",
+        "fire-extinguisher",
+        "fish",
+        "flag",
+        "flag-checkered",
+        "flashlight",
+        "flask",
+        "flask-potion",
+        "flower",
+        "flower-tulip",
+        "folder-open",
+        "folders",
+        "font",
+        "font-case",
+        "football-ball",
+        "forklift",
+        "forward",
+        "fragile",
+        "frog",
+        "function",
+        "futbol",
+        "gamepad",
+        "gamepad-alt",
+        "gas-pump",
+        "gavel",
+        "gem",
+        "ghost",
+        "gift",
+        "gingerbread-man",
+        "glass-martini",
+        "glasses-alt",
+        "globe",
+        "globe-americas",
+        "golf-ball",
+        "graduation-cap",
+        "gramophone",
+        "grimace",
+        "grin",
+        "grin-alt",
+        "grin-beam",
+        "grin-beam-sweat",
+        "grin-squint-tears",
+        "grin-tongue",
+        "grin-wink",
+        "angry",
+        "dizzy",
+        "flushed",
+        "laugh",
+        "meh",
+        "sad-tear",
+        "surprise",
+        "tired",
+        "guitar",
+        "hammer",
+        "hand-holding-box",
+        "hand-holding-heart",
+        "hand-holding-medical",
+        "hand-holding-seedling",
+        "hand-holding-usd",
+        "hand-paper",
+        "hand-peace",
+        "hands-helping",
+        "hands-usd",
+        "handshake",
+        "hashtag",
+        "hat-chef",
+        "head-side-brain",
+        "head-side-mask",
+        "head-side-medical",
+        "head-vr",
+        "head-vr",
+        "heart-rate",
+        "helicopter",
+        "hiking",
+        "history",
+        "home",
+        "home-heart",
+        "hospital",
+        "hourglass",
+        "hourglass-half",
+        "ice-cream",
+        "images",
+        "info-circle",
+        "joystick",
+        "key",
+        "keyboard",
+        "kite",
+        "lamp",
+        "landmark",
+        "language",
+        "layer-group",
+        "leaf",
+        "lemon",
+        "life-ring",
+        "lightbulb",
+        "link",
+        "list",
+        "list-alt",
+        "location",
+        "location-arrow",
+        "lock-alt",
+        "loveseat",
+        "luchador",
+        "magic",
+        "magnet",
+        "map",
+        "map-marker",
+        "map-pin",
+        "map-signs",
+        "medal",
+        "megaphone",
+        "meteor",
+        "microphone",
+        "mobile-alt",
+        "money-bill",
+        "monkey",
+        "moon",
+        "mountains",
+        "mouse-pointer",
+        "mug",
+        "music",
+        "network-wired",
+        "newspaper",
+        "paint-brush",
+        "paint-brush-alt",
+        "paint-roller",
+        "palette",
+        "paper-plane",
+        "paperclip",
+        "paw",
+        "pen-alt",
+        "pen-nib",
+        "pencil-paintbrush",
+        "pencil-ruler",
+        "pennant",
+        "percent",
+        "phone",
+        "phone-rotary",
+        "piano",
+        "pie",
+        "pizza-slice",
+        "plane",
+        "planet-ringed",
+        "planet-moon",
+        "play",
+        "plug",
+        "plus",
+        "podcast",
+        "podium",
+        "poll",
+        "poll-people",
+        "presentation",
+        "project-diagram",
+        "puzzle-piece",
+        "question",
+        "radio",
+        "random",
+        "receipt",
+        "recycle",
+        "road",
+        "robot",
+        "rocket",
+        "route-highway",
+        "rss",
+        "ruler-triangle",
+        "running",
+        "sack",
+        "satellite",
+        "save",
+        "school",
+        "scroll",
+        "search",
+        "seedling",
+        "server",
+        "shapes",
+        "share-alt",
+        "shield-alt",
+        "shopping-basket",
+        "shopping-cart",
+        "signature",
+        "siren-on",
+        "sitemap",
+        "spa",
+        "star",
+        "store-alt",
+        "sync-alt",
+        "tachometer-alt-fast",
+        "tag",
+        "tasks",
+        "tasks-alt",
+        "telescope",
+        "terminal",
+        "theater-masks",
+        "thermometer-half",
+        "thumbs-up",
+        "thumbs-down",
+        "thumbtack",
+        "thunderstorm",
+        "times-octagon",
+        "tools",
+        "tooth",
+        "traffic-light-stop",
+        "tree",
+        "tree-alt",
+        "tree-palm",
+        "trophy",
+        "trumpet",
+        "tv",
+        "tv-retro",
+        "umbrella",
+        "university",
+        "user",
+        "user-astronaut",
+        "user-chart",
+        "user-cog",
+        "user-graduate",
+        "user-hard-hat",
+        "user-headset",
+        "user-secret",
+        "users-class",
+        "users",
+        "vials",
+        "video",
+        "virus",
+        "volume",
+        "wallet",
+        "weight",
+        "wheat",
+        "wheelchair",
+        "whistle",
+        "window-frame-open",
+        "wine-bottle",
+        "wreath",
+        "wrench",
+      ],
+    })
+    .iconpicker("setIcon", actualIcon.replace("far ", ""))
+    .iconpicker("setLabelHeader", "{0} de {1} p\u00e1ginas")
+    .iconpicker("setLabelFooter", "{0} - {1} de {2} \u00edconos")
+    .iconpicker("setPlacement", "bottom") // Only in button tag
+    .iconpicker("setRows", 5)
+    .iconpicker("setSearch", true)
+    .iconpicker("setSearchText", "Nombre del \u00edcono")
+    .iconpicker("setSelectedClass", "btn-primary")
+    .iconpicker("setUnselectedClass", "btn-default");
+
+  $("." + triggerBtn).on("change", function (e) {
+    $("#" + hiddenfieldValue).val("far " + e.icon);
+    var icon = $(".btn-iconpicker > svg");
+    icon.attr("data-icon", e.icon.replace("fa-", ""));
+  });
+}
+
+function ActualizaIconos() {
+    $(".fa-file-pdf-o").addClass("fa-file-pdf").removeClass("fa-file-pdf-o");
+    $(".fa-file-excel-o").addClass("fa-file-excel").removeClass("fa-file-excel-o");
+}

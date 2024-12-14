@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" /><link rel="shortcut icon" href="https://d3g4v0cf6ioz32.cloudfront.net/static/imagenes/brand/logo_2018/isologo_color.png" /><title>
+	Academic Manager
+</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../App_Themes/flat/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="../App_Themes/flat/css/bootstrap-reset.css" rel="stylesheet" type="text/css" />
+    <!--external css-->
+    
+    <script src="https://fontawesome.academic.lat/fontawesome/js/light.min.js"></script><script src="https://fontawesome.academic.lat/fontawesome/js/regular.min.js"></script><script src="https://fontawesome.academic.lat/fontawesome/js/solid.min.js"></script><script src="https://fontawesome.academic.lat/fontawesome/js/duotone.min.js"></script><script src="https://fontawesome.academic.lat/fontawesome/js/fontawesome.min.js"></script>
+    <!--right slidebar-->
+    <link href="../App_Themes/flat/css/slidebars.css" rel="stylesheet" type="text/css" />
+    <!-- Custom styles for this template -->
+    <link href="../App_Themes/flat/css/style.css?v=20240918" rel="stylesheet" type="text/css" /><link href="../App_Themes/flat/css/style-responsive.css" rel="stylesheet" type="text/css" />
+
+    <!--Flatpickr-->
+    <link href="../App_Themes/flat/assets/flatpickr/2.3.5/dist/flatpickr.min.css" rel="stylesheet" type="text/css" /><link href="../App_Themes/flat/assets/flatpickr/2.3.5/dist/themes/dark.css" rel="stylesheet" type="text/css" />
+
+    <!--Calentim-->
+    <link href="../App_Themes/flat/assets/calentim/build/css/calentim.min.css?20190911" rel="stylesheet" />
+
+    <!--Bootstrap Chosen-->
+    <link rel="stylesheet" href="../App_Themes/flat/css/bootstrap-chosen.css?v=22.02.18.1" />
+
+    <!--Bootstrap Toggle-->
+    <link rel="stylesheet" href="../App_Themes/flat/css/bootstrap-toggle/bootstrap-toggle.css" /><link rel="stylesheet" type="text/css" href="../App_Themes/flat/assets/bootstrap-timepicker/compiled/timepicker.css" />
+
+    <script src="../App_Themes/flat/js/jquery.js" type="text/javascript"></script>
+    <script src="../App_Themes/flat/js/Academic.js?v=24.3.6" type="text/javascript"></script>
+    <link href="../App_Themes/flat/css/academic.css?v=24.02.27" rel="stylesheet" type="text/css" />
+
+    <style id="estiloTemporalOcultarModal">
+        .modalPanel {
+            display: none;
+        }
+    </style>
+
+    <style>
+        @media (max-width: 1000px) {
+            body {
+                background: #ebebf0 !important;
+            }
+
+            #sectionContent {
+                border: none;
+                text-align: center;
+                background: transparent;
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin-top: 30px;
+                margin-left: 0;
+                padding: 0;
+                width: auto;
+            }
+
+            #sectionContenedor {
+                background: none;
+                padding: 20px;
+                box-shadow: none;
+                border-radius: 0;
+                overflow: hidden;
+            }
+
+            #dvFooter {
+                visibility: hidden;
+            }
+        }
+    </style>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
+    <!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.min.js"></script>
+<![endif]-->
+    
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+        var url = (document.location.href).split(":");
+        var dominio = url[1].split("/")[2].split(".");
+        if (url[1].indexOf("localhost") === -1) {
+            if (dominio[2].indexOf("lat") === 0) {
+                var protocol = url[0];
+                if (protocol === "http") {
+                    window.location.replace("https:" + url[1]);
+                }
+            }
+            else {
+                var sUrlCorrecta = 'https://' + dominio[0] + '.' + dominio[1] + '.lat';
+                location.href = sUrlCorrecta;
+            }
+        }
+
+        function showPassword() {
+
+            const togglePassword = document.querySelector("#togglePassword");
+            const password = document.querySelector("#txtContrasenia");
+
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            // toggle the eye icon
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        }
+
+    </script>
+</head>
+<body id="ctl00_body" class="login-body" style="background: url(https://d3g4v0cf6ioz32.cloudfront.net/static/imagenes/backgrounds/background_login_4.jpg) 50% 50% no-repeat fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <form method="post" action="./Autenticacion.aspx" onsubmit="javascript:return WebForm_OnSubmit();" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ctl00_lnkDefBtn')" id="aspnetForm">
+<div class="aspNetHidden">
+<input type="hidden" name="ctl00_tsm_HiddenField" id="ctl00_tsm_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=pynGkmcFUV13He1Qd6_TZBR40ufIUTtWU79ZMYlK05hHTfUYky28KmgeQkMqVa-x5dyvtCJg7xzcgSJ7WuDoqw2&amp;t=638393033798026697" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=nv7asgRUU0tRmHNR2D6t1PKpGsSWacH6Rb8AhL7Pdh1TMSAidx0n_XE5ne_NPJv8bQ1IEWPTSy3GabyYyPDvkHCk3NMJzuXPQXzE8eYR4WZohFPA1aDkIPzYDwb3_H0Uu9c7Vza3sxEEvhmjOSaH-A2&amp;t=3e1b2a62" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+var __cultureInfo = {"name":"es-MX","numberFormat":{"CurrencyDecimalDigits":2,"CurrencyDecimalSeparator":".","IsReadOnly":true,"CurrencyGroupSizes":[3],"NumberGroupSizes":[3],"PercentGroupSizes":[3],"CurrencyGroupSeparator":",","CurrencySymbol":"$","NaNSymbol":"NaN","CurrencyNegativePattern":1,"NumberNegativePattern":1,"PercentPositivePattern":0,"PercentNegativePattern":0,"NegativeInfinitySymbol":"-∞","NegativeSign":"-","NumberDecimalDigits":2,"NumberDecimalSeparator":".","NumberGroupSeparator":",","CurrencyPositivePattern":0,"PositiveInfinitySymbol":"∞","PositiveSign":"+","PercentDecimalDigits":2,"PercentDecimalSeparator":".","PercentGroupSeparator":",","PercentSymbol":"%","PerMilleSymbol":"‰","NativeDigits":["0","1","2","3","4","5","6","7","8","9"],"DigitSubstitution":1},"dateTimeFormat":{"AMDesignator":"a. m.","Calendar":{"MinSupportedDateTime":"\/Date(-62135575200000)\/","MaxSupportedDateTime":"\/Date(253402300799999)\/","AlgorithmType":1,"CalendarType":1,"Eras":[1],"TwoDigitYearMax":2029,"IsReadOnly":true},"DateSeparator":"/","FirstDayOfWeek":0,"CalendarWeekRule":0,"FullDateTimePattern":"dddd, d\u0027 de \u0027MMMM\u0027 de \u0027yyyy hh:mm:ss tt","LongDatePattern":"dddd, d\u0027 de \u0027MMMM\u0027 de \u0027yyyy","LongTimePattern":"hh:mm:ss tt","MonthDayPattern":"d \u0027de\u0027 MMMM","PMDesignator":"p. m.","RFC1123Pattern":"ddd, dd MMM yyyy HH\u0027:\u0027mm\u0027:\u0027ss \u0027GMT\u0027","ShortDatePattern":"dd/MM/yyyy","ShortTimePattern":"hh:mm tt","SortableDateTimePattern":"yyyy\u0027-\u0027MM\u0027-\u0027dd\u0027T\u0027HH\u0027:\u0027mm\u0027:\u0027ss","TimeSeparator":":","UniversalSortableDateTimePattern":"yyyy\u0027-\u0027MM\u0027-\u0027dd HH\u0027:\u0027mm\u0027:\u0027ss\u0027Z\u0027","YearMonthPattern":"MMMM\u0027 de \u0027yyyy","AbbreviatedDayNames":["dom.","lun.","mar.","mié.","jue.","vie.","sáb."],"ShortestDayNames":["do.","lu.","ma.","mi.","ju.","vi.","sá."],"DayNames":["domingo","lunes","martes","miércoles","jueves","viernes","sábado"],"AbbreviatedMonthNames":["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],"MonthNames":["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre",""],"IsReadOnly":true,"NativeCalendarName":"calendario gregoriano","AbbreviatedMonthGenitiveNames":["ene.","feb.","mar.","abr.","may.","jun.","jul.","ago.","sep.","oct.","nov.","dic.",""],"MonthGenitiveNames":["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre",""]},"eras":[1,"d. C.",null,0]};//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=yeSNAJTOPtPimTGCAo3LlV14kAy-Y377SY5QeRJpvnIb-H6I9Ps978v1HI8RIBZ-Y0ZpeV8xt1beGa7tXXS9yXURVjTV9IfS63z2hsA5oxp-rXYQkotxyvW5x5WznnSk0&amp;t=ffffffff886f56f4" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('Error al cargar el marco de trabajo de cliente ASP.NET Ajax.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=DT3YJR8QaqV61-teuz0hgr39AfREQND_FM5wLJvFJvigDAn-Xh7TErtjXvVdDkEGYX6_Mr1qiWVopWt0LxO7HScLx67f2mw0D_cH-UrEW-FWl_WYwfeNVzdqGmKdRZ4mBpiqAk1LdtaBnHxxatW75Q2&amp;t=ffffffff886f56f4" type="text/javascript"></script>
+<script src="/Autenticacion.aspx?_TSM_HiddenField_=ctl00_tsm_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.607%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aes-MX%3ae96eec5b-f5fc-47c8-9cba-2a4f2f4c43f0%3a475a4ef5%3a5546a2b%3a497ef277%3aeffe2a26%3aa43b07eb%3a751cdd15%3adfad98a5%3ad2e10b12%3a37e2e5c9%3a1d3ed089%3a3cf12cf1" type="text/javascript"></script>
+<script src="/WebResource.axd?d=JoBkLzP19aTuxbWOhHobYveINF_TiPkFSVMon2tzhjE69kZ0dFMs0mhikXQ_8GVBTPwZArzHdiWHG6_ilqdHdg2&amp;t=638393033798026697" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="24B938C6" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="q7l5mWnTGwzJ4b/m5sJ/fUT//wvr9UqOW6zL176ck6LnIla2zbpUBBBUBchYK2T7wNZudzKaq8rVvW4nLYNI1pg6qfsCZwHPvlht2s+yvh9GFgo/SThQ5IUaFsbxm9lGwl4q8/q2jELhgM+cKtrAU8RTLInoI9ftOfXWpB9o5QU7bQjO2HYNuykxFLfek4OpMrmSHT9ViXjsPyGuShJkZqEvoWYUHjoyJ2v9XLiP08AIVrLa4IwwB7VhySiFjd/Mf6DAlVL35UHJuvX4NbdHyDkFfgFssnlYehz/D+DWenpv2UzQfYLFrc05jEIp7AB49D8oJgWn2BN+o8kRm+j0F+80AOzgwyA7kv1n49DqbEf3lEjsB6nuZkcHnEMo+TAm" />
+</div>
+        <link type="text/css" rel="stylesheet" href="../App_Themes/flat/css/themes/theme_indigo_dark/obsequium_theme.min.css?v=2" /><script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$tsm', 'aspnetForm', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+
+        
+        <section id="sectionContent" class="contenedorPrincipalLogin2">
+            
+            <div style="position: relative; border: none;">
+                <div id="sectionContenedor" class="contenedorSecundarioLogin">
+                    
+    
+    <div class="row">
+        <div class="col-sm-12 m-bot15 text-center">
+            <img id="ctl00_cphContenido_imgEscudo" src="https://d3g4v0cf6ioz32.cloudfront.net/ulsaneza/Escudos/63fa4583_98d9_4253_85ae_1450d5d17e4b3.png" style="max-width: 250px; max-height: 100px;" />
+        </div>
+        <div class="form-group col-sm-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i>
+                    <span id="ctl00_cphContenido_Requiredfieldvalidator3" ValidateEmptyText="true" style="color:Red;display:none;">*</span></span>
+                <input name="ctl00$cphContenido$txtUsuario" type="email" id="txtUsuario" class="form-control input-lg t16" autocomplete="off" placeholder="Correo electrónico" required="" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById(&#39;lnkEntrar&#39;).click();return false;}} else {return true}; " />
+            </div>
+        </div>
+        <div class="form-group col-sm-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-lock"></i>
+                    <span id="ctl00_cphContenido_Requiredfieldvalidator1" ValidateEmptyText="true" style="color:Red;display:none;">*</span></span>
+                <input name="ctl00$cphContenido$txtContrasenia" type="password" id="txtContrasenia" class="form-control input-lg t16" placeholder="Contraseña" required="" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById(&#39;lnkEntrar&#39;).click();return false;}} else {return true}; " />
+                <span class="input-group-addon" onclick="showPassword()">
+                    <i class="fas fa-eye" id="togglePassword" style="cursor: pointer"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="col-sm-12 m-bot15">
+            <a id="lnkEntrar" class="btn btn-primary-theme btn-block btn-lg t14" href="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphContenido$lnkEntrar&quot;, &quot;&quot;, true, &quot;vgAut&quot;, &quot;&quot;, false, true))">Inicia sesión</a>
+        </div>
+        <div class="col-sm-12 m-bot15">
+            
+        </div>
+        <div class="col-sm-12 m-bot15">
+            
+        </div>
+        <div class="col-sm-12 m-bot20 text-center">
+            <a id="ctl00_cphContenido_hlkActivacion" class="section-more-link" href="FormExternos/ActivarCuenta.aspx">Activar mi cuenta</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a id="ctl00_cphContenido_hlkRecuperar" class="section-more-link" href="FormExternos/RecuperarCuenta.aspx">Olvidé mi contraseña</a>
+        </div>
+        <div id="ctl00_cphContenido_dvAppsMovil" class="col-sm-12">
+            <a href="https://play.google.com/store/apps/details?id=lat.academic.app" target="_blank">
+                <img alt="App disponible en Google Play" src="App_Themes/flat/img/badge-google-play.png" style="width: 35%; float: left" />
+            </a>
+            <a href="https://itunes.apple.com/us/app/academic-manager/id1275767194?l=es&mt=8" target="_blank">
+                <img alt="Consíguelo en App Store" src="App_Themes/flat/img/badge-app_store.png" style="width: 35%; float: right" />
+            </a>
+            <div class="divisor"></div>
+        </div>
+        <div class="col-sm-12 m-top15 text-center">
+            <img style="width: 110px;" src="https://d3g4v0cf6ioz32.cloudfront.net/static/imagenes/brand/logo_2018/logo_horizontal_color.svg" alt="Academic" />
+        </div>
+    </div>
+    <div id="ctl00_cphContenido_vgContinuar" style="display:none;">
+
+</div>
+
+                </div>
+            </div>
+        </section>
+        
+
+<style>
+    @media (min-width: 961px) and (max-width: 1024px) {
+        #pnlCopyright, #pnlPrivacy {
+            width: 750px;
+        }
+    }
+
+    @media (min-width:1025px) and (max-width: 1280px) {
+        #pnlCopyright, #pnlPrivacy {
+            width: 800px;
+        }
+    }
+
+    @media (min-width:1281px) {
+        #pnlCopyright, #pnlPrivacy {
+            width: 1000px;
+        }
+    }
+</style>
+<footer id="dvFooter" class="PanelFooter footer-section" style="z-index: 999999999;">
+    <div class="col-lg-7 col-md-10 col-sm-12 col-xs-12 pull-center">
+        <div class="col-sm-4 col-xs-12 m-bot5 text-center">
+            <a id="lnkbittech" class="TextoFooterLnkLog" href="https://www.bit.lat/" target="_blank"><img src="https://d3g4v0cf6ioz32.cloudfront.net/static/imagenes/brand/bit_logo_2020.png" alt="" /></a>
+        </div>
+        <div class="col-sm-4 col-xs-4 m-bot5 m-top3 text-center">
+            
+            <a id="lnkPrivacyPolicy" href="https://www.academic.lat/legal/politica-de-privacidad/" target="_blank" style="color:White;">Aviso de privacidad</a>
+        </div>
+        <div class="col-sm-4 col-xs-4 m-bot5 m-top3 text-center">
+            
+            <a id="lnkTermsConditions" href="https://www.academic.lat/legal/terminos-y-condiciones/" target="_blank" style="color:White;">Términos y condiciones</a>
+        </div>
+    </div>
+</footer>
+
+
+
+        
+    
+    <a id="ctl00_cphModals_lnkCerrarCaptcha" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkCerrarCaptcha&#39;,&#39;&#39;)"></a>
+    <a id="ctl00_cphModals_lnkCaptcha" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkCaptcha&#39;,&#39;&#39;)"></a>
+    <div id="pnlCaptcha" class="modalPanel" style="overflow:auto;">
+	
+        <div class="contenedorModalPanel">
+            <div class="modal-body">
+                <div id="ctl00_cphModals_divRecaptcha" class="g-recaptcha" data-sitekey="6LcoQf8SAAAAADdiK6iN_8_NuaJUltjdDTi1wYy5"></div>
+            </div>
+
+            <div class="modal-footer">
+                <a id="lnkAceptar" class="btn btn-primary" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkAceptar&#39;,&#39;&#39;)">Aceptar</a>
+            </div>
+        </div>
+    
+</div>
+
+    
+    
+    <a id="ctl00_cphModals_lnkCerrarToken" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkCerrarToken&#39;,&#39;&#39;)"></a>
+    <a id="ctl00_cphModals_lnkToken" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkToken&#39;,&#39;&#39;)"></a>
+    <div id="pnlToken" class="modalPanel" style="overflow:auto;">
+	
+        <div class="contenedorModalPanel">
+            <div class="modal-body">
+                <input name="ctl00$cphModals$txtToken" type="password" id="txtToken" class="form-control input-lg t16" autocomplete="off" placeholder="Token de acceso" required="" onkeydown="if(event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) {document.getElementById(&#39;lnkAceptarToken&#39;).click();return false;}} else {return true}; " />
+            </div>
+            <div class="modal-footer">
+                <a id="lnkACancelarToken" class="btn btn-cancelar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkACancelarToken&#39;,&#39;&#39;)">Cancelar</a>
+                <a id="lnkAceptarToken" class="btn btn-primary" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkAceptarToken&#39;,&#39;&#39;)">Aceptar</a>
+
+            </div>
+        </div>
+    
+</div>
+
+
+    
+    <a id="ctl00_cphModals_lnkSeleccionaUsuario" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkSeleccionaUsuario&#39;,&#39;&#39;)"></a>
+    <a id="ctl00_cphModals_lnkCierraSeleccion" class="ocultar" href="javascript:__doPostBack(&#39;ctl00$cphModals$lnkCierraSeleccion&#39;,&#39;&#39;)"></a>
+    <div id="pnlSeleccionUsuario" class="contenedorModalPanel col-lg-4 col-md-6 col-sm-7 col-xs-10" style="overflow:auto;">
+	
+        <!--carousel start-->
+        <section class="panel">
+            <div id="c-slide" class="carousel slide auto panel-body">
+                <ol class="carousel-indicators out">
+                    
+                </ol>
+                <div class="carousel-inner">
+                    
+                </div>
+                <a data-slide="prev" href="#c-slide" class="left carousel-control">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a data-slide="next" href="#c-slide" class="right carousel-control">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+        </section>
+    
+</div>
+
+    
+<script type="text/javascript">
+//<![CDATA[
+var Page_ValidationSummaries =  new Array(document.getElementById("ctl00_cphContenido_vgContinuar"));
+var Page_Validators =  new Array(document.getElementById("ctl00_cphContenido_Requiredfieldvalidator3"), document.getElementById("ctl00_cphContenido_Requiredfieldvalidator1"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_cphContenido_Requiredfieldvalidator3 = document.all ? document.all["ctl00_cphContenido_Requiredfieldvalidator3"] : document.getElementById("ctl00_cphContenido_Requiredfieldvalidator3");
+ctl00_cphContenido_Requiredfieldvalidator3.controltovalidate = "txtUsuario";
+ctl00_cphContenido_Requiredfieldvalidator3.errormessage = "El usuario es necesario.";
+ctl00_cphContenido_Requiredfieldvalidator3.display = "Dynamic";
+ctl00_cphContenido_Requiredfieldvalidator3.validationGroup = "vgAut";
+ctl00_cphContenido_Requiredfieldvalidator3.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_cphContenido_Requiredfieldvalidator3.initialvalue = "";
+var ctl00_cphContenido_Requiredfieldvalidator1 = document.all ? document.all["ctl00_cphContenido_Requiredfieldvalidator1"] : document.getElementById("ctl00_cphContenido_Requiredfieldvalidator1");
+ctl00_cphContenido_Requiredfieldvalidator1.controltovalidate = "txtContrasenia";
+ctl00_cphContenido_Requiredfieldvalidator1.errormessage = "La contraseña es necesaria.";
+ctl00_cphContenido_Requiredfieldvalidator1.display = "Dynamic";
+ctl00_cphContenido_Requiredfieldvalidator1.validationGroup = "vgAut";
+ctl00_cphContenido_Requiredfieldvalidator1.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_cphContenido_Requiredfieldvalidator1.initialvalue = "";
+var ctl00_cphContenido_vgContinuar = document.all ? document.all["ctl00_cphContenido_vgContinuar"] : document.getElementById("ctl00_cphContenido_vgContinuar");
+ctl00_cphContenido_vgContinuar.headertext = "Existen errores en los datos";
+ctl00_cphContenido_vgContinuar.showmessagebox = "True";
+ctl00_cphContenido_vgContinuar.showsummary = "False";
+ctl00_cphContenido_vgContinuar.validationGroup = "vgAut";
+//]]>
+</script>
+
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("ctl00_tsm_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        
+(function(id) {
+    var e = document.getElementById(id);
+    if (e) {
+        e.dispose = function() {
+            Array.remove(Page_ValidationSummaries, document.getElementById(id));
+        }
+        e = null;
+    }
+})('ctl00_cphContenido_vgContinuar');
+WebForm_AutoFocus('lnkDefBtn');
+document.getElementById('ctl00_cphContenido_Requiredfieldvalidator3').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('ctl00_cphContenido_Requiredfieldvalidator3'));
+}
+
+document.getElementById('ctl00_cphContenido_Requiredfieldvalidator1').dispose = function() {
+    Array.remove(Page_Validators, document.getElementById('ctl00_cphContenido_Requiredfieldvalidator1'));
+}
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","CancelControlID":"ctl00_cphModals_lnkCerrarCaptcha","PopupControlID":"pnlCaptcha","dynamicServicePath":"/Autenticacion.aspx","id":"ctl00_cphModals_mpeCaptcha"}, null, null, $get("ctl00_cphModals_lnkCaptcha"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","CancelControlID":"ctl00_cphModals_lnkCerrarToken","PopupControlID":"pnlToken","dynamicServicePath":"/Autenticacion.aspx","id":"ctl00_cphModals_mpeToken"}, null, null, $get("ctl00_cphModals_lnkToken"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","CancelControlID":"ctl00_cphModals_lnkCierraSeleccion","PopupControlID":"pnlSeleccionUsuario","dynamicServicePath":"/Autenticacion.aspx","id":"ctl00_cphModals_mpeSeleccionUsuario"}, null, null, $get("ctl00_cphModals_lnkSeleccionaUsuario"));
+});
+//]]>
+</script>
+</form>
+
+    <script src="../App_Themes/flat/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="../App_Themes/flat/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="../App_Themes/flat/js/jquery.scrollTo.min.js"></script>
+    <script src="../App_Themes/flat/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script src="../App_Themes/flat/js/respond.min.js"></script>
+
+    <script src="../App_Themes/flat/js/slidebars.min.js"></script>
+
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-daterangepicker/date.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/ckeditor/ckeditor.js"></script>
+
+    <!--Moment-->
+    <script src="../App_Themes/flat/assets/calentim/build/vendor/moment.min.js"></script>
+
+    <!--Flatpickr-->
+    <script src="../App_Themes/flat/assets/flatpickr/2.3.5/dist/flatpickr.min.js"></script>
+    <script src="../App_Themes/flat/assets/flatpickr/2.3.5/dist/l10n/es.js"></script>
+
+    <!--Calentim-->
+    <script src="../App_Themes/flat/assets/calentim/build/js/calentim.min.js"></script>
+
+    <!--Bootstrap Chosen-->
+    <script src="../App_Themes/flat/js/chosen.jquery.js"></script>
+
+    <!--Bootstrap Toggle-->
+    <script src="../App_Themes/flat/js/bootstrap-toggle/bootstrap-toggle.js"></script>
+
+    <script src="../App_Themes/flat/assets/pickadate/picker.js"></script>
+    <script src="../App_Themes/flat/assets/pickadate/picker.date.js"></script>
+    <script src="../App_Themes/flat/assets/pickadate/picker.time.js"></script>
+    <script src="../App_Themes/flat/assets/pickadate/legacy.js"></script>
+    <script src="../App_Themes/flat/assets/pickadate/translations/es_ES.js"></script>
+
+    <script type="text/javascript" src="../App_Themes/flat/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+
+    <script src="../App_Themes/flat/js/common-scripts.js"></script>
+    <script src="../App_Themes/flat/assets/fuelux/js/spinner.min.js" type="text/javascript"></script>
+    <script src="../App_Themes/flat/assets/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script src="../App_Themes/flat/assets/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="../App_Themes/flat/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script src="../App_Themes/flat/js/advanced-form-components.js"></script>
+
+    <script language="javascript" type="text/javascript">
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(endReq);
+    </script>
+
+    
+    
+
+    <script>$("#estiloTemporalOcultarModal").remove();</script>
+</body>
+</html>
